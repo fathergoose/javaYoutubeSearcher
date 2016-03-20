@@ -38,7 +38,7 @@ public class YoutubeSearch {
 	public static void main(String[] args) throws IOException {
 		YoutubeSearch search = new YoutubeSearch(args[0]);
 		for (Video vid : search.videos) {
-			System.out.println(vid.getUrl());
+			System.out.println(vid.getTitle() + ": " + vid.getUrl());
 		}
 
 	}
