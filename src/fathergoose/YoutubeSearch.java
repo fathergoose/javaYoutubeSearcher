@@ -12,8 +12,7 @@ import javax.json.JsonReader;
 
 public class YoutubeSearch {
 	
-//	private static final String apiKey = System.getenv("YOUTUBE_API_KEY");
-	private static final String apiKey = "<HIDDEN>";
+    private static final String apiKey = System.getenv("YOUTUBE_API_KEY");
 	private String query;
 	private ArrayList<Video> videos = new ArrayList<Video>();
 	
