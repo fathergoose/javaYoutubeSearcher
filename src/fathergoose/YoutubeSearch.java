@@ -1,5 +1,7 @@
 package fathergoose;
 
+import java.net.URL;
+
 public class YoutubeSearch {
 	
 	private static final String apiKey = System.getenv("YOUTUBE_API_KEY");
@@ -7,6 +9,7 @@ public class YoutubeSearch {
 	
 	YoutubeSearch(String q) {
 		query = q;
+		URL url = new URL("https://www.googleapis.com/youtube/v3/search?q=" + query + "&key=" + apiKey );
 		
 	}
 
