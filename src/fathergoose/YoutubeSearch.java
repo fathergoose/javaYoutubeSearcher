@@ -12,12 +12,13 @@ import javax.json.JsonReader;
 
 public class YoutubeSearch {
 	
-	private static final String apiKey = System.getenv("YOUTUBE_API_KEY");
+//	private static final String apiKey = System.getenv("YOUTUBE_API_KEY");
+	private static final String apiKey = "<HIDDEN>";
 	private String query;
-	private ArrayList<Video> videos;
+	private ArrayList<Video> videos = new ArrayList<Video>();
 	
 	YoutubeSearch(String q) throws IOException {
-		query = q;
+		String query = q;
 		URL url = new URL("https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + query + "&key=" + apiKey );
 		try (InputStream instr = url.openStream();
 			JsonReader rdr = Json.createReader(instr)) {
@@ -25,8 +26,10 @@ public class YoutubeSearch {
 		    	JsonArray results = obj.getJsonArray("items");
 		    	for (JsonObject result : results.getValuesAs(JsonObject.class)) {
 				// Loop through the response and do stuff with it
-		    		Video video = new Video(result.getJsonObject("snippet").getString("title"), result.getJsonObject("id").getString("videoId"));
-		    		videos.add(video);
+		    		String resultId = result.getJsonObject("id").getString("videoId");
+		    		String resultTitle = result.getJsonObject("snippet").getString("title");
+		    		Video vid = new Video(resultTitle, resultId);
+		    		videos.add(vid);
 		    		
 			}
 		}
@@ -34,9 +37,9 @@ public class YoutubeSearch {
 	}
 
 	public static void main(String[] args) throws IOException {
-		YoutubeSearch search = new YoutubeSearch(args[0]);
+		YoutubeSearch search = new YoutubeSearch("hotdogs");
 		for (Video vid : search.videos) {
-			System.out.println(vid.toString());
+			System.out.println(vid.getUrl());
 		}
 		System.out.println(search.query);
 		System.out.println(apiKey);
