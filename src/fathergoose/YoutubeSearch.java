@@ -3,6 +3,7 @@ package fathergoose;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import javax.json.Json;
@@ -13,11 +14,10 @@ import javax.json.JsonReader;
 public class YoutubeSearch {
 	
     private static final String apiKey = System.getenv("YOUTUBE_API_KEY");
-	private String query;
 	private ArrayList<Video> videos = new ArrayList<Video>();
 	
 	YoutubeSearch(String q) throws IOException {
-		String query = q;
+		String query = URLEncoder.encode(q, "UTF-8");
 		URL url = new URL("https://www.googleapis.com/youtube/v3/search?part=snippet&q=" + query + "&key=" + apiKey );
 		try (InputStream instr = url.openStream();
 			JsonReader rdr = Json.createReader(instr)) {
